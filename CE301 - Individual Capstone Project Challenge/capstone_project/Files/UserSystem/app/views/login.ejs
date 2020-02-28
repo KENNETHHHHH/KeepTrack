@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html>
+
+<% include /partials/head %>
+
+<body>
+
+  <% include /partials/header %>
+
+  <main class="main-container" role"main">
+
+    <div class="main-header">
+      <h1>
+        <%- title %>
+      </h1>
+    </div>
+
+    <div class="main-content">
+      <div class="main-content-text">
+
+        <% if(message.length != 0) { %>
+        <div class="main-errors">
+          <p class="error-msg">
+            <%= message %>
+          </p>
+        </div>
+        <% }  %>
+
+        <form method="POST" action="/login">
+
+          <label class="form-group-login-label">Username</label>
+          <input class="form-group-login-input" type="text" name="username" class="form-inputs">
+
+          <label class="form-group-login-label">Password</label>
+          <input class="form-group-login-input" type="password" name="password" class="form-inputs">
+
+          <div class="login-button-container">
+            <button class="login-button" type="submit">Login</button>
+          </div>
+
+        </form>
+
+        <div class="reset-password-container">
+          <a class="reset-password-link" href="/reset">Change Password</a>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <% include /partials/footer %>
+
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html>
+
+<% include /partials/head %>
+
+<body>
+
+  <% include /partials/header %>
+
+  <main class="main-container" role"main">
+
+    <div class="main-header">
+      <h1>
+        <%- title %>
+      </h1>
+    </div>
+    <div class="main-content">
+
+      <div class="main-content-text">
+
+        <div class="main-errors">
+
+          <form method="POST" action="/event">
+
+            <label class="form-group-contact-label">Title</label>
+            <input class="form-group-contact-input" type="text" name="title" class="form-inputs">
+
+            <label class="form-group-contact-label">Name</label>
+            <input class="form-group-contact-input" type="text" name="title" class="form-inputs" value="<% if (user.firstName == undefined) { %><% } else { %><%= user.firstName %> <%= user.lastName %><% } %>">
+
+            <label class="form-group-contact-label">Email</label>
+            <input class="form-group-contact-input" type="text" name="title" class="form-inputs" value="<% if (user.email == undefined) { %><% } else { %><%= user.email %><% } %>">
+
+            <label class="form-group-contact-label">Message</label><br>
+            <textarea class="form-group-contact-input" name="details" rows="10" cols="30"></textarea>
+
+            <div class="contact-button-container">
+              <button class="contact-button" type="submit" class="btn">Submit</button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <% include /partials/footer %>
+
+</body>
+
+</html>

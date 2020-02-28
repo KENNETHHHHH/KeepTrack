@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html>
+
+<% include /partials/head %>
+
+<body>
+
+  <% include /partials/header %>
+
+  <main class="main-container" role"main">
+
+    <div class="main-header">
+      <h1>
+        <%- title %>
+      </h1>
+    </div>
+
+    <img class="event-page-image" src="/images/party.jpg" alt="event-picture">
+
+    <div class="main-content">
+
+      <div class="main-content-text">
+
+        <div class="main-errors">
+
+          <% if (Object.keys(eventErrors).length != 0) { %>
+          <% Object.values(eventErrors).forEach(error => { %>
+          <div class="main-errors">
+            <p class="error-msg">
+              <%= error.msg %>
+            </p>
+          </div>
+          <% }) %>
+
+          <% } %>
+
+          <form method="POST" action="/event">
+
+            <div class="form-group-event-input-formating">
+              <div>
+                <label class="form-group-event-label">Title</label>
+                <input class="form-group-event-input" type="text" name="title">
+              </div>
+              <div>
+                <label class="form-group-event-label">Event</label>
+                <select class="form-group-event-input" name="eventType" id="eType">
+                  <option value="Party">Party</option>
+                  <option value="Birthday">Birthday</option>
+                  <option value="Wedding">Wedding</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group-event-input-formating">
+              <div>
+                <label class="form-group-event-label">Start Time</label>
+                <input class="form-group-event-input" type="time" name="startTime" id="sTime" onchange="changeTime(this.value)" required>
+              </div>
+              <div>
+                <label class="form-group-event-label">End Time</label>
+                <input class="form-group-event-input" type="time" name="endTime" id="eTime" required>
+              </div>
+            </div>
+            <div class="form-group-event-input-formating">
+              <div>
+                <label class="form-group-event-label">Start Date</label>
+                <input class="form-group-event-input" type="date" name="startDate" id="sDate" onchange="changeDate(this.value)" required>
+              </div>
+              <div>
+                <label class="form-group-event-label">End Date</label>
+                <input class="form-group-event-input" type="date" name="endDate" id="eDate" required>
+              </div>
+            </div>
+            <div>
+              <label class="form-group-event-label">Details</label>
+              <textarea class="form-group-event-input" name="details" rows="10" cols="30"></textarea>
+            </div>
+
+            <div class="update-button-container">
+              <button class="update-button" type="submit" onclick="
+                  var el = document.getElementsByTagName('select')[0];
+                ">Submit</button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <% include /partials/footer %>
+
+</body>
+
+</html>

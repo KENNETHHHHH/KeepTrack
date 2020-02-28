@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html>
+
+<% include /partials/head %>
+
+<body>
+
+  <% include /partials/header %>
+
+  <main class="main-container" role"main">
+
+    <div class="main-header">
+      <h1>
+        <%- title %>
+      </h1>
+    </div>
+
+    <div class="main-content">
+      <div class="main-content-text">
+
+        <div class="user-profile-container-left">
+          <% if (user.profilePicture == undefined) { %>
+          <img class="avatar-img-profile" src="/images/img_avatar.png" alt="Avatar">
+          <% } else { %>
+          <img class="avatar-img-profile" src="../<%= user.profilePicture %>" alt="Avatar">
+          <% } %>
+        </div>
+        <div class="user-profile-container-right">
+
+          <% if (user.firstName == undefined) { %>
+          <p>Name: N/A</p>
+          <% } else { %>
+          <p>Name: <%= user.firstName %> <%= user.lastName %></p>
+          <% } %>
+
+          <% if (user.email == undefined) { %>
+          <p>Email: N/A</p>
+          <% } else { %>
+          <p>Email: <%= user.email %></p>
+          <% } %>
+
+          <% if (user.mobile == undefined) { %>
+          <p>Number: N/A</p>
+          <% } else { %>
+          <p>Number: <%= user.mobile %></p>
+          <% } %>
+
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <% include /partials/footer %>
+
+</body>
+
+</html>

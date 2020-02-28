@@ -1,0 +1,40 @@
+<!-- Kenneth Dayman - 1502246 -->
+<!-- Header to provide the user with navigation and access to certain pages once they have logged in -->
+
+<header class="header-fixed" role="banner">
+  <div class="header-container">
+    <div class="header-logo">
+      <a href="/">
+        <img class="manImg" src="/images/LogoSmaller.png"></img>
+      </a>
+    </div>
+    <nav class="header-navigation" role="navigation">
+      <ul class="header-navigation-list">
+
+        <li class="header-navigation-link-about"><a href="/about">About</a></li>
+        <li class="header-navigation-link-contact"><a href="/contact">Contact</a></li>
+
+        <% if(isAuthenticated) { %>
+
+        <li class="header-navigation-link-event"><a href="/event">Event</a></li>
+        <li class="header-navigation-link-profile"><a href="/profile">Profile</a></li>
+        <li class="header-navigation-link-logout"><a href="/logout">Logout</a></li>
+
+        <% } else { %>
+
+        <li class="header-navigation-link-register"><a href="/register">Register</a></li>
+        <li class="header-navigation-link-login"><a href="/login">Login</a></li>
+
+        <% } %>
+
+      </ul>
+    </nav>
+    <% if(isAuthenticated) { %>
+    <% if (user.profilePicture == undefined) { %>
+    <img class="avatar-img" src="/images/img_avatar.png" alt="Avatar">
+    <% } else { %>
+    <img class="avatar-img" src="../<%= user.profilePicture %>" alt="Avatar">
+    <% } %>
+    <% } %>
+  </div>
+</header>

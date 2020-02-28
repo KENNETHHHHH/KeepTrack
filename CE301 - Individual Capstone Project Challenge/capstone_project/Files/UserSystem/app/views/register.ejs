@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html>
+
+<% include /partials/head %>
+
+<body>
+
+  <% include /partials/header %>
+
+  <main class="main-container" role"main">
+
+    <div class="main-header">
+      <h1>
+        <%- title %>
+      </h1>
+    </div>
+
+    <div class="main-content">
+      <div class="main-content-text">
+
+        <div class="main-errors">
+
+          <% if (Object.keys(errors).length != 0) { %>
+          <% Object.values(errors).forEach(error => { %>
+          <div class="main-errors">
+            <p class="error-msg">
+              <%= error.msg %>
+            </p>
+          </div>
+          <% }) %>
+          <% } else { %>
+
+          <% if (Object.keys(userCheck).length > 0) { %>
+          <div class="main-errors">
+            <p class="error-msg">Username has already been used</p>
+          </div>
+          <% } %>
+
+          <% if (Object.keys(emailCheck).length > 0) { %>
+          <div class="main-errors">
+            <p class="error-msg">Email has already been used</p>
+          </div>
+          <% } %>
+          <% } %>
+
+          <form method="POST" action="/register">
+
+            <label class="form-group-register-label">Username</label>
+            <input class="form-group-register-input" type="text" name="username" class="form-inputs" value="<%- form.username %>">
+
+            <label class="form-group-register-label">Password</label>
+            <input class="form-group-register-input" type="password" name="password" class="form-inputs" value="<%- form.password %>">
+
+            <label class="form-group-register-label">Re-Enter Password</label>
+            <input class="form-group-register-input" type="password" name="passwordMatch" class="form-inputs" value="<%- form.passwordMatch %>">
+
+            <label class="form-group-register-label">Email</label>
+            <input class="form-group-register-input" type="email" name="email" class="form-inputs" value="<%- form.email %>">
+
+            <div class="register-button-container">
+              <button class="register-button" type="submit">Submit</button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <% include /partials/footer %>
+
+</body>
+
+</html>

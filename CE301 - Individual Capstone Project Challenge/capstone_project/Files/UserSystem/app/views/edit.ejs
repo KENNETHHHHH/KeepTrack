@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+<html>
+
+<% include /partials/head %>
+
+<body>
+
+  <% include /partials/header %>
+
+  <main class="main-container" role"main">
+
+    <div class="main-header">
+      <h1>
+        <%- title %>
+      </h1>
+    </div>
+
+    <div class="main-content">
+      <div class="main-content-text">
+
+        <% if (friendInviteSuccessMessage != false) { %>
+        <div class="main-errors">
+          <p class="success-msg">
+            <%= friendInviteSuccessMessage %>
+          </p>
+        </div>
+        <% } %>
+
+        <h2>Edit Event Information</h2>
+
+        <div class="main-errors">
+
+          <% if (Object.keys(eventErrors).length != 0) { %>
+          <% Object.values(eventErrors).forEach(error => { %>
+          <div class="main-errors">
+            <p class="error-msg">
+              <%= error.msg %>
+            </p>
+          </div>
+          <% }) %>
+
+          <% } %>
+
+          <form method="POST" action="/edit/<%= event.event_id %>">
+
+            <div class="form-group-event-input-formating">
+              <div>
+                <label class="form-group-event-label">Title</label>
+                <input class="form-group-event-input" type="text" name="title" value="<% if (event.title == undefined) { %><% } else { %><%= event.title %><% } %>">
+              </div>
+              <div>
+                <label class="form-group-event-label">Event</label>
+                <select class="form-group-event-input" name="eventType" id="eType">
+                  <option value="Party">Party</option>
+                  <option value="Birthday">Birthday</option>
+                  <option value="Wedding">Wedding</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group-event-input-formating">
+              <div>
+                <label class="form-group-event-label">Start Time</label>
+                <input class="form-group-event-input" type="time" name="startTime" id="sTime" onchange="changeTime(this.value)" value="<% if (event.startTime == undefined) { %><% } else { %><%= event.startTime %><% } %>" required>
+              </div>
+              <div>
+                <label class="form-group-event-label">End Time</label>
+                <input class="form-group-event-input" type="time" name="endTime" id="eTime" value="<% if (event.endTime == undefined) { %><% } else { %><%= event.endTime %><% } %>" required>
+              </div>
+            </div>
+            <div class="form-group-event-input-formating">
+              <div>
+                <label class="form-group-event-label">Start Date</label>
+                <input class="form-group-event-input" type="date" name="startDate" id="sDate" onchange="changeDate(this.value)" value="<% if (event.startDate == undefined) { %><% } else { %><%= event.startDate %><% } %>" required>
+              </div>
+              <div>
+                <label class="form-group-event-label">End Date</label>
+                <input class="form-group-event-input" type="date" name="endDate" id="eDate" value="<% if (event.endDate == undefined) { %><% } else { %><%= event.endDate %><% } %>" required>
+              </div>
+            </div>
+            <div class="form-group-event-input-formating">
+              <div>
+                <label class="form-group-event-label">Details</label>
+                <textarea class="form-group-event-input" name="details" rows="10" cols="30"><% if (event.details == undefined) { %><% } else { %><%= event.details %><% } %></textarea>
+              </div>
+            </div>
+
+            <div class="update-button-container">
+              <button class="update-button" type="submit" class="btn">Update</button>
+            </div>
+
+          </form>
+
+          <form action="/profile/delete/<%= event.event_id %>" method="get">
+            <div class="delete-button-container">
+              <form action="/profile/delete/<%= event.event_id %>" method="get">
+                <button class="delete-button" type="submit" class="btn">Delete</button>
+            </div>
+          </form>
+
+          <br><br>
+
+          <div class="form-group-event-input-formating">
+            <div>
+              <label class="form-group-event-label">Friends</label>
+              <% if (friends.length > 0) {%>
+              <table class="friend-list">
+                <% friends.forEach((f, profile) => { %>
+                <tr>
+                  <td class="friend-profile-img" style="padding-left: 10px; padding-bottom: 5px">
+                    <% if (f.profilePicture == undefined) { %><img class="avatar-img-small" src="/images/img_avatar.png" alt="Avatar" id="profile-picture">
+                    <% } else { %><img class="avatar-img-small" src="../<%= f.profilePicture %>" alt="Avatar" id="profile-picture">
+                    <% } %>
+                  </td>
+                  <td class="friend-username">
+                    <%= f.username %>
+                  </td>
+                  <td>
+                    <div class="profile-button-container">
+                      <form action="/event/invite/<%= f.userOneId %>/<%= event.event_id %>" method="post">
+                        <button class="profile-button" type="submit">Invite</button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+                <% }) %>
+              </table>
+
+              <% } else { %>
+              <p>No Friends</p>
+              <% } %>
+            </div>
+            <div>
+              <label class="form-group-event-label">Pending</label>
+              <% if (friends.length > 0) {%>
+              <table class="friend-list">
+                <% friends.forEach((f, profile) => { %>
+                <tr>
+                  <td class="friend-profile-img" style="padding-left: 10px; padding-bottom: 5px">
+                    <% if (f.profilePicture == undefined) { %><img class="avatar-img-small" src="/images/img_avatar.png" alt="Avatar" id="profile-picture">
+                    <% } else { %><img class="avatar-img-small" src="../<%= f.profilePicture %>" alt="Avatar" id="profile-picture">
+                    <% } %>
+                  </td>
+                  <td class="friend-username">
+                    <%= f.username %>
+                  </td>
+                </tr>
+                <% }) %>
+              </table>
+
+              <% } else { %>
+              <p>No Friends</p>
+              <% } %>
+            </div>
+            <div>
+              <label class="form-group-event-label">Accpeted</label>
+              <% if (friends.length > 0) {%>
+              <table class="friend-list">
+                <% friends.forEach((f, profile) => { %>
+                <tr>
+                  <td class="friend-profile-img" style="padding-left: 10px; padding-bottom: 5px">
+                    <% if (f.profilePicture == undefined) { %><img class="avatar-img-small" src="/images/img_avatar.png" alt="Avatar" id="profile-picture">
+                    <% } else { %><img class="avatar-img-small" src="../<%= f.profilePicture %>" alt="Avatar" id="profile-picture">
+                    <% } %>
+                  </td>
+                  <td class="friend-username">
+                    <%= f.username %>
+                  </td>
+                </tr>
+                <% }) %>
+              </table>
+
+              <% } else { %>
+              <p>No Friends</p>
+              <% } %>
+            </div>
+          </div>
+
+          <br>
+
+          <div class="form-group-event-input-formating">
+            <div>
+              <label class="form-group-event-label">Add Gift</label>
+              <input class="form-group-event-input" type="text" name="gift">
+            </div>
+          </div>
+
+          <div class="update-button-container">
+            <button class="update-button" type="submit" class="btn">Add Gift</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <% include /partials/footer %>
+
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html>
+
+<% include /partials/head %>
+
+<body>
+
+  <% include /partials/header %>
+
+  <main class="main-container" role"main">
+
+    <div class="main-header">
+      <h1>
+        <%- title %>
+      </h1>
+    </div>
+
+    <div class="main-content">
+      <div class="main-content-text">
+
+        <% if (Object.keys(errors).length != 0) { %>
+        <% Object.values(errors).forEach(error => { %>
+        <div class="main-errors">
+          <p class="error-msg">
+            <%= error.msg %>
+          </p>
+        </div>
+        <% }) %>
+        <% } %>
+
+        <% if (Object.keys(userCheck).length > 0) { %>
+        <div class="main-errors">
+          <p class="error-msg">Username isnt correct</p>
+        </div>
+        <% } %>
+
+        <form method="POST" action="/reset">
+
+          <label class="form-group-login-label">Username</label>
+          <input class="form-group-login-input" type="text" name="username" class="form-inputs">
+
+          <label class="form-group-login-label">Old Password</label>
+          <input class="form-group-login-input" type="password" name="oldPassword" class="form-inputs">
+
+          <label class="form-group-login-label">New Password</label>
+          <input class="form-group-login-input" type="password" name="newPassword" class="form-inputs">
+
+          <label class="form-group-login-label">New Password Match</label>
+          <input class="form-group-login-input" type="password" name="newPasswordMatch" class="form-inputs">
+
+          <div class="login-button-container">
+            <button class="login-button" type="submit">Change Password</button>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+
+  </main>
+
+  <% include /partials/footer %>
+
+</body>
+
+</html>

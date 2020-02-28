@@ -1,0 +1,70 @@
+*
+{
+    font-family: sans-serif;
+
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body
+{
+    height: 100%;
+    padding: 0;
+
+    background-color: rgb(255, 255, 255);
+}
+
+p
+{
+  padding: 10px;
+}
+
+#Container
+{
+    position: relative;
+    left: 50%;
+
+    float: left;
+
+    margin-top: 5em;
+}
+
+#Content
+{
+    font-size: 2em;
+
+    position: relative;
+    left: -50%;
+
+    float: left;
+}
+
+#ColourOne
+{
+    color: rgb(255, 255, 255);
+    background-color: RGB(119, 136, 170);
+}
+
+#ColourTwo
+{
+    color: rgb(255, 255, 255);
+    background-color: RGB(45, 68, 113);
+}
+
+#ColourThree
+{
+    color: rgb(255, 255, 255);
+    background-color: RGB(78, 100, 142);
+}
+
+#ColourFour
+{
+    color: rgb(255, 255, 255);
+    background-color: rgb(21, 43, 85);
+}
+
+#ColourFive
+{
+    color: rgb(255, 255, 255);
+    background-color: rgb(6, 23, 57);
+}

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+<html>
+
+<% include /partials/head %>
+
+<body>
+
+  <% include /partials/header %>
+
+  <main class="main-container" role"main">
+
+    <div class="main-header">
+      <h1>
+        <%- title %>
+      </h1>
+    </div>
+
+    <div class="main-content">
+      <div class="main-content-text">
+
+        <h2>Personal Information</h2>
+
+        <% if (Object.keys(profileErrors).length != 0) { %>
+        <% Object.values(profileErrors).forEach(error => { %>
+        <div class="main-errors">
+          <p class="error-msg">
+            <%= error.msg %>
+          </p>
+        </div>
+        <% }) %>
+        <% } %>
+
+        <% if (Object.keys(profilePictureErrorMessage).length != 0) { %>
+        <div class="main-errors">
+          <p class="error-msg">
+            <%= typeof profilePictureErrorMessage != 'undefined' ? profilePictureErrorMessage : '' %>
+          </p>
+        </div>
+        <% } %>
+
+        <% if(profileSuccessMessage != false) { %>
+        <div class="main-errors">
+          <p class="success-msg">
+            <%= profileSuccessMessage %>
+          </p>
+        </div>
+        <% }  %>
+
+        <form method="POST" enctype="multipart/form-data" action="/profile">
+
+          <label class="form-group-profile-label">Username</label>
+          <input class="form-group-profile-input" type="text" name="username" value="<%= user.username %>" readonly>
+
+          <label class="form-group-profile-label">Email</label>
+          <input class="form-group-profile-input" type="text" name="username" value="<%= user.email %>" readonly>
+
+          <label class="form-group-profile-label">First Name</label>
+          <input class="form-group-profile-input" type="text" name="firstName" value="<% if (user.firstName == undefined) { %><% } else { %><%= user.firstName %><% } %>">
+
+          <label class="form-group-profile-label">Last Name</label>
+          <input class="form-group-profile-input" type="text" name="lastName" value="<% if (user.lastName == undefined) { %><% } else { %><%= user.lastName %><% } %>">
+
+          <label class="form-group-profile-label">Mobile Number</label>
+          <input class="form-group-profile-input" type="text" name="mobileNumber" value="<% if (user.mobile == undefined) { %><% } else { %><%= user.mobile %><% } %>">
+
+          <label class="form-group-profile-label">Profile Picture</label>
+          <div class="profile-picture-container">
+            <label class="profile-picture-label">Choose Image
+              <input type="file" name="avatar" onchange="document.getElementById('profile-picture').src = window.URL.createObjectURL(this.files[0])">
+            </label>
+            <div class="profile-picture">
+              <% if (user.profilePicture == undefined) { %>
+              <img class="avatar-img-change" src="/images/img_avatar.png" alt="Avatar" id="profile-picture">
+              <% } else { %>
+              <img class="avatar-img-change" src="../<%= user.profilePicture %>" alt="Avatar" id="profile-picture">
+              <% } %>
+            </div>
+          </div>
+
+          <div class="profile-update-button-container">
+            <button class="profile-update-button" type="submit" class="btn">Update</button>
+          </div>
+
+        </form>
+
+        <h2>Hosting</h2>
+
+        <div class="event-list-c">
+          <div class="event-list-container">
+            <% if (event.length > 0) {%>
+            <table class="event-list">
+              <tr class="dfsdg">
+                <th>Title</th>
+                <th>Date</th>
+                <th></th>
+              </tr>
+              <% event.forEach((e, profile) => { %>
+              <tr class="test1">
+                <td class="title-align">
+                  <%= e.title %>
+                </td>
+                <td class="title-align">
+                  <%= e.startDate.split('-').reverse().join('-') %>
+                </td>
+                <td>
+                  <div class="view-button-container">
+                    <form action="/edit/<%= e.event_id %>" method="get">
+                      <button class="view-button" type="submit" class="btn">View</button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+              <% }) %>
+            </table>
+          </div>
+        </div>
+
+        <% } else { %>
+        <p>No Events</p>
+        <% } %>
+
+        <h2>Event Requests</h2>
+
+        <div class="event-list-c">
+          <div class="event-list-container">
+            <% if (event.length > 0) {%>
+            <table class="event-list">
+              <tr class="dfsdg">
+                <th>Title</th>
+                <th>Date</th>
+                <th></th>
+              </tr>
+              <% event.forEach((e, profile) => { %>
+              <tr class="test1">
+                <td class="title-align">
+                  <%= e.title %>
+                </td>
+                <td class="title-align">
+                  <%= e.startDate.split('-').reverse().join('-') %>
+                </td>
+                <td>
+                  <div class="view-button-container">
+                    <form action="/edit/<%= e.event_id %>" method="get">
+                      <button class="view-button" type="submit" class="btn">View</button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+              <% }) %>
+            </table>
+          </div>
+        </div>
+
+        <% } else { %>
+        <p>No Event Invites</p>
+        <% } %>
+
+        <h2>Add Friends</h2>
+
+        <% if (friendSuccessMessage != false) { %>
+        <div class="main-errors">
+          <p class="success-msg">
+            <%= friendSuccessMessage %>
+          </p>
+        </div>
+        <% } %>
+
+        <% if (friendErrorMessage != false) { %>
+        <div class="main-errors">
+          <p class="error-msg">
+            <%= friendErrorMessage %>
+          </p>
+        </div>
+        <% } %>
+
+        <div class="friend-form-container">
+
+          <form class="friend-form" action="/profile/friends" method="POST">
+            <input class="friend-form-input" type="text" name="friendUsername">
+            <button class="friend-form-button" type="submit" class="btn">Add</button>
+          </form>
+        </div>
+
+        <h2>Friends</h2>
+
+        <div class="friend-list-container">
+          <% if (friends.length > 0) {%>
+          <table class="friend-list">
+            <% friends.forEach((f, profile) => { %>
+            <tr>
+              <td class="friend-profile-img" style="padding-left: 10px; padding-bottom: 5px">
+                <% if (f.profilePicture == undefined) { %><img class="avatar-img-small" src="/images/img_avatar.png" alt="Avatar" id="profile-picture">
+                <% } else { %><img class="avatar-img-small" src="../<%= f.profilePicture %>" alt="Avatar" id="profile-picture">
+                <% } %>
+              </td>
+              <td class="friend-username">
+                <%= f.username %>
+              </td>
+              <td>
+                <div class="remove-button-container">
+                <form action="/friends/delete/<%= f.friendId %>" method="get">
+                  <button class="remove-button" type="submit">Remove</button>
+                </form>
+              </div>
+                <div class="profile-button-container">
+                  <form action="/user/<%= f.id %>" method="get">
+                    <button class="profile-button" type="submit">Profile</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+            <% }) %>
+          </table>
+        </div>
+
+        <% } else { %>
+        <p>No Friends</p>
+        <% } %>
+
+        <h2>Friend Requests</h2>
+
+        <div class="request-friend-list-container">
+          <% if (friendRequest.length > 0) {%>
+          <table class="request-friend-list">
+
+            <% friendRequest.forEach((f, profile) => { %>
+            <tr>
+
+              <td class="friend-profile-img" style="padding-left: 10px; padding-bottom: 5px">
+                <% if (f.profilePicture == undefined) { %>
+                <img class="avatar-img-small" src="/images/img_avatar.png" alt="Avatar" id="profile-picture">
+                <% } else { %>
+                <img class="avatar-img-small" src="../<%= f.profilePicture %>" alt="Avatar" id="profile-picture">
+                <% } %>
+              </td>
+              <td style="padding-left: 0px">
+                <%= f.username %>
+              </td>
+              <td>
+                <div class="decline-button-container">
+                  <form action="/friends/decline/<%= f.friendId %>" method="get">
+                    <button class="decline-button" type="submit" class="btn">&#10006;</button>
+                  </form>
+                </div>
+                <div class="accept-button-container">
+                  <form action="/friends/accept/<%= f.friendId %>" method="get">
+                    <button class="accept-button" type="submit" class="btn">&#10004;</button>
+                  </form>
+                </div>
+              </td>
+              <% }) %>
+          </table>
+        </div>
+
+        <% } else { %>
+        <p>No Friend Requests</p>
+        <% } %>
+
+      </div>
+    </div>
+
+  </main>
+
+  <% include /partials/footer %>
+
+</body>
+
+</html>
